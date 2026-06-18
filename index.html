@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen Técnico - Veyon y Gestión de Estaciones - Instituto NOA</title>
-    <!-- Iconos -->
+    <title>Examen Oficial - Soporte y Reparación - Instituto NOA</title>
+    <!-- Evitar error de favicon -->
+    <link rel="icon" href="data:,">
+    <!-- Iconos y Fuentes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Fuente -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #ff6600; /* Naranja NOA */
+            --primary-color: #ff6600;
             --primary-dark: #d35400;
-            --secondary-color: #1a1a1a; /* Negro NOA */
-            --veyon-blue: #007bff;
+            --secondary-color: #1a1a1a;
             --accent-color: #27ae60;
             --bg-color: #f4f4f4;
-            --text-color: #333333;
             --card-bg: #ffffff;
         }
 
@@ -68,13 +67,13 @@
 
         .option-btn {
             background: white; border: 2px solid #ddd; padding: 15px; border-radius: 8px;
-            cursor: pointer; font-size: 1rem; text-align: left; color: #444;
+            cursor: pointer; font-size: 1rem; text-align: left; color: #444; font-weight: 500;
         }
         .option-btn:hover { border-color: var(--primary-color); background: #fff8f5; }
 
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.96); display: none; flex-direction: column;
+            background: rgba(0,0,0,0.97); display: none; flex-direction: column;
             align-items: center; justify-content: center; z-index: 100; padding: 20px; color: white;
         }
 
@@ -82,25 +81,20 @@
         .form-input { width: 100%; padding: 10px; margin: 5px 0 15px; border: 1px solid #ccc; border-radius: 5px; }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
 <div class="container">
     <header>
-        <div style="font-weight:900;"><i class="fas fa-desktop"></i> INSTITUTO NOA - VEYON</div>
+        <div style="font-weight:900;"><i class="fas fa-tools"></i> INSTITUTO NOA - SOPORTE</div>
         <div class="timer-badge" id="timerBadge" style="display:none;"><span id="timerText">20</span>s</div>
     </header>
     <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
     <!-- INICIO -->
     <div id="startScreen" class="screen active">
-        <div style="font-size: 4rem; color: var(--veyon-blue); margin-bottom: 10px;"><i class="fas fa-network-wired"></i></div>
-        <h1>Gestión de Clientes y Servidores</h1>
-        <p>Evaluación sobre el uso de <b>Veyon</b> para soporte técnico en estaciones de trabajo.</p>
-        
-        <div style="text-align:left; background:#eef6ff; padding:15px; border-radius:10px; border-left:5px solid var(--veyon-blue); margin-top:20px;">
-            <p><b>Caso de estudio:</b> El administrador necesita resolver problemas en una PC cliente sin desplazarse físicamente a la estación.</p>
-        </div>
-
+        <div style="font-size: 4rem; color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-laptop-medical"></i></div>
+        <h1>Diagnóstico y Reparación de PC</h1>
+        <p>Evaluación técnica sobre fallas comunes, mantenimiento y hardware.</p>
         <button class="btn" onclick="startQuiz()">COMENZAR EXAMEN</button>
     </div>
 
@@ -116,49 +110,49 @@
         <div id="feedbackIcon" style="font-size:4rem; margin-bottom:15px;"></div>
         <h2 id="feedbackTitle"></h2>
         <p id="feedbackExplanation" style="margin: 15px 0 25px; font-size:1.1rem; max-width: 500px;"></p>
-        <button class="btn" onclick="nextQuestion()">CONTINUAR</button>
+        <button class="btn" onclick="nextQuestion()">SIGUIENTE</button>
     </div>
 
     <!-- RESULTADOS -->
     <div id="resultScreen" class="screen">
-        <h2>Evaluación Finalizada</h2>
-        <div id="scoreDisplay" style="font-size:3.5rem; font-weight:900; color:var(--primary-color); margin:15px 0;">0/20</div>
+        <h2>Resultado Final</h2>
+        <div id="scoreDisplay" style="font-size:4rem; font-weight:900; color:var(--primary-color); margin:15px 0;">0/20</div>
         
         <div class="student-form">
             <label>Nombre del Alumno:</label>
-            <input type="text" id="studentName" class="form-input" placeholder="Nombre completo">
+            <input type="text" id="studentName" class="form-input">
             <label>DNI:</label>
-            <input type="number" id="studentDNI" class="form-input" placeholder="Documento">
+            <input type="number" id="studentDNI" class="form-input">
         </div>
 
         <button class="btn btn-whatsapp" onclick="sendWhatsApp()">
-            <i class="fab fa-whatsapp"></i> ENVIAR AL DOCENTE
+            <i class="fab fa-whatsapp"></i> ENVIAR RESULTADO
         </button>
     </div>
 </div>
 
 <script>
     const questions = [
-        { q: "¿Cuál es el rol de la PC que controla a las demás en Veyon?", o: ["Veyon Client", "Veyon Master (Maestro)", "Estación de Trabajo", "Switch"], a: 1, e: "El Master es la aplicación administrativa desde donde se supervisan y controlan los clientes." },
-        { q: "¿Cómo se llama el componente que debe estar instalado en las PCs de los alumnos (estaciones)?", o: ["Veyon Master", "Navegador Web", "Veyon Service (Servicio)", "Panel de Control"], a: 2, e: "El Veyon Service corre de fondo en las máquinas cliente para permitir que el Maestro se conecte." },
-        { q: "¿Cuál es la principal ventaja de usar Veyon para un técnico de soporte?", o: ["Hacer que la PC sea más rápida", "Controlar la PC cliente de forma remota para resolver problemas", "Limpiar el hardware por dentro", "Instalar Windows"], a: 1, e: "Permite al técnico tomar control del mouse y teclado del cliente para solucionar errores sin moverse de su lugar." },
-        { q: "Para que el Maestro encuentre a un Cliente en la red, ¿qué dato es indispensable?", o: ["El color del gabinete", "Nombre de Host (Hostname) o Dirección IP", "La marca del monitor", "El nombre del alumno"], a: 1, e: "Veyon utiliza la red TCP/IP, por lo que necesita identificar la PC por su nombre de red o su IP." },
-        { q: "¿Qué función permite ver qué está haciendo el alumno en tiempo real?", o: ["Bloqueo", "Modo Demostración", "Monitoreo (Remote View)", "Apagado"], a: 2, e: "El monitoreo muestra miniaturas de todas las pantallas de las estaciones cliente activas." },
-        { q: "¿Qué sucede cuando el técnico usa la función 'Control Remoto'?", o: ["La PC cliente se apaga", "El técnico puede usar el mouse y teclado de la PC cliente", "Se borran los archivos", "La PC cliente se desconecta de internet"], a: 1, e: "El control remoto permite manipular la estación de trabajo como si estuvieras sentado frente a ella." },
-        { q: "¿Qué herramienta de seguridad utiliza Veyon para que no cualquier persona controle las PCs?", o: ["Contraseñas de Facebook", "Autenticación por claves (Pares de llaves)", "No tiene seguridad", "Cables con candado"], a: 1, e: "Usa claves públicas y privadas. El cliente solo acepta órdenes de quien tiene la llave privada correcta." },
-        { q: "¿En qué situación es útil la función 'Reiniciar' de Veyon?", o: ["Cuando el cliente tiene un problema de software y requiere un reboot", "Para cambiar el procesador", "Para limpiar el teclado", "Para encender el aire acondicionado"], a: 0, e: "Reiniciar remotamente es una tarea básica de soporte para refrescar el sistema del cliente." },
-        { q: "¿Qué significa que Veyon funcione bajo una arquitectura Cliente-Servidor?", o: ["Que todas las PCs son iguales", "Que una PC central pide servicios a las demás", "Que una PC (Servidor/Master) gestiona y supervisa a las demás (Clientes)", "Que solo funciona con servidores de Google"], a: 2, e: "Veyon separa las tareas: una máquina administra y las otras estaciones reciben las órdenes o supervisión." },
-        { q: "Si una estación de trabajo no aparece en el Maestro, ¿cuál podría ser la causa?", o: ["La PC está apagada o el Servicio de Veyon no está corriendo", "El monitor es muy pequeño", "El alumno no sabe informática", "El mouse es inalámbrico"], a: 0, e: "Si el Veyon Service no está activo en el cliente, la comunicación maestro-cliente es imposible." },
-        { q: "¿Para qué sirve el 'Veyon Configurator'?", o: ["Para jugar videojuegos", "Para configurar las llaves, accesos y ubicaciones de las PCs", "Para escribir textos", "Para navegar por Internet"], a: 1, e: "Es la herramienta técnica donde se definen los parámetros de red y seguridad del programa." },
-        { q: "¿Qué permite la función de 'Bloqueo' (Lock)?", o: ["Romper la PC", "Inhabilitar el uso de la PC cliente para llamar la atención del usuario", "Ponerle una clave al SSD", "Cerrar la puerta del aula"], a: 1, e: "Bloquear pantallas es útil para que el usuario deje de usar la estación mientras el técnico explica algo o realiza un ajuste." },
-        { q: "¿Cómo se llama el proceso de enviar la pantalla del Maestro a todos los Clientes?", o: ["Spam", "Modo Demostración (Demo)", "Control Remoto", "Chat"], a: 1, e: "El Modo Demo sirve para proyectar la pantalla del profesor/técnico en todas las estaciones de trabajo." },
-        { q: "¿Puede Veyon funcionar a través de WiFi?", o: ["No, solo por cable", "Sí, siempre que las PCs estén en la misma red local", "Solo si hay internet satelital", "No, WiFi es solo para celulares"], a: 1, e: "Veyon funciona sobre cualquier red local (LAN), ya sea por cable ethernet o inalámbrica." },
-        { q: "El 'Veyon Service' se inicia...", o: ["Manualmente cada vez que el alumno quiere", "Automáticamente con el sistema operativo", "Solo cuando hay internet", "Nunca, es manual"], a: 1, e: "Debe iniciar automáticamente para que el técnico siempre tenga acceso a la estación." },
-        { q: "¿Qué permite la función 'Transferencia de Archivos'?", o: ["Enviar documentos directamente a las estaciones de trabajo", "Cambiar el disco duro", "Imprimir hojas", "Ver videos de YouTube"], a: 0, e: "Es vital para distribuir drivers o herramientas de reparación a los clientes remotamente." },
-        { q: "¿Qué es una 'Ubicación' en Veyon Maestro?", o: ["Un país", "Un grupo de computadoras organizado (ej: Aula 1)", "La marca de la placa base", "La posición del GPS"], a: 1, e: "Las ubicaciones permiten agrupar PCs para administrarlas por sectores o salas de forma ordenada." },
-        { q: "¿Qué pasa si las llaves de autenticación no coinciden entre Maestro y Cliente?", o: ["La PC explota", "El Maestro no podrá acceder ni controlar al Cliente", "La PC cliente irá más lento", "Se cambia el fondo de pantalla"], a: 1, e: "La seguridad de Veyon impide el acceso si no hay un emparejamiento de llaves válido." },
-        { q: "¿Cuál es el beneficio de la función 'Encendido Remoto' (Wake-on-LAN)?", o: ["Ahorrar luz", "Prender las PCs clientes desde el Maestro sin ir una por una", "Cambiar la fuente de poder", "Bajar la temperatura"], a: 1, e: "Permite al administrador encender todas las estaciones de trabajo de forma simultánea desde su PC." },
-        { q: "En resumen, Veyon es una herramienta de...", o: ["Diseño Gráfico", "Gestión de redes y supervisión de estaciones de trabajo", "Edición de Video", "Contabilidad"], a: 1, e: "Es una solución de software para monitorear y gestionar computadoras en entornos de red local." }
+        { q: "Si la PC enciende pero emite pitidos constantes y no da video, ¿qué componente suele fallar?", o: ["Disco Duro", "Memoria RAM", "Fuente de poder", "Gabinete"], a: 1, e: "Los pitidos constantes al arrancar suelen ser la señal de la BIOS de que hay un problema con los módulos de RAM." },
+        { q: "¿Cuál es la función principal de la pasta térmica?", o: ["Pegar el procesador", "Eliminar burbujas de aire para mejorar la conducción de calor", "Limpiar el procesador", "Aumentar la velocidad del ventilador"], a: 1, e: "La pasta térmica rellena las imperfecciones microscópicas entre el procesador y el disipador para que el calor fluya mejor." },
+        { q: "Una PC se apaga sola después de 10 minutos de uso intenso. ¿Cuál es la causa más probable?", o: ["Falta de espacio en disco", "Sobrecalentamiento del procesador", "Monitor defectuoso", "Virus de teclado"], a: 1, e: "Por seguridad, las placas base apagan el sistema si el CPU alcanza temperaturas peligrosas." },
+        { q: "Al encender la PC aparece el mensaje 'CMOS Checksum Error'. ¿Qué debemos reemplazar?", o: ["El procesador", "La pila CR2032 de la placa madre", "La memoria RAM", "El cable SATA"], a: 1, e: "Este error indica que la pila que mantiene la configuración de la BIOS se ha agotado." },
+        { q: "¿Qué herramienta es indispensable para proteger los componentes de descargas electrostáticas?", o: ["Guantes de látex", "Pulsera antiestática", "Destornillador imantado", "Trapo húmedo"], a: 1, e: "La pulsera antiestática iguala nuestro potencial eléctrico con el del chasis para evitar dañar circuitos sensibles." },
+        { q: "Si un disco duro hace ruidos metálicos (cliqueos), ¿qué tipo de falla es?", o: ["Falla de software", "Falla física mecánica", "Falla de drivers", "Falla de Windows"], a: 1, e: "Los ruidos mecánicos indican que el cabezal o el motor del disco duro están dañados físicamente." },
+        { q: "¿Cuál es el primer paso antes de abrir un gabinete para mantenimiento?", o: ["Quitar la RAM", "Desconectar la fuente de la corriente eléctrica", "Limpiar el monitor", "Instalar un antivirus"], a: 1, e: "La seguridad es primero: siempre se debe trabajar sin energía eléctrica conectada." },
+        { q: "¿Qué componente convierte la corriente alterna (AC) en corriente continua (DC)?", o: ["La placa base", "La fuente de alimentación", "El procesador", "El inversor de giro"], a: 1, e: "La fuente recibe 220v/110v AC y entrega voltajes bajos en DC (12v, 5v, 3.3v)." },
+        { q: "Un cliente dice que su PC está 'muy lenta'. Al revisar, el disco está al 100% de uso. ¿Qué mejora técnica es la más efectiva?", o: ["Limpiar el gabinete", "Cambiar el HDD por un SSD", "Pintar el gabinete", "Cambiar el teclado"], a: 1, e: "Un SSD es hasta 10 veces más rápido que un HDD mecánico, eliminando los cuellos de botella." },
+        { q: "¿Para qué sirve el comando 'chkdsk' en Windows?", o: ["Para borrar fotos", "Para reparar errores en el sistema de archivos del disco", "Para cambiar el fondo", "Para apagar la PC"], a: 1, e: "CheckDisk analiza el disco en busca de sectores defectuosos o errores lógicos." },
+        { q: "Si la PC no enciende absolutamente nada (ni luces, ni ventiladores), ¿qué es lo primero a probar?", o: ["El mouse", "El cable de energía y la fuente", "El sistema operativo", "La lectora de DVD"], a: 1, e: "Se debe verificar la cadena de alimentación: enchufe, cable y fuente de poder." },
+        { q: "¿Qué significan las siglas 'POST' en informática?", o: ["Power On Self Test", "Primary Operating System Text", "Point of Support Technical", "Procesador de Operaciones Standard"], a: 0, e: "El POST es la autocomprobación que realiza la PC al encenderse para verificar el hardware básico." },
+        { q: "¿Con qué producto químico se deben limpiar los contactos de una memoria RAM?", o: ["Agua y jabón", "Alcohol isopropílico", "Perfume", "Aceite"], a: 1, e: "El alcohol isopropílico se evapora rápido y no deja residuos, ideal para componentes electrónicos." },
+        { q: "Si Windows muestra una pantalla azul (BSOD), ¿dónde podemos encontrar la causa?", o: ["En el manual del gabinete", "En el código de error que aparece en la pantalla", "En la etiqueta de la fuente", "En el teclado"], a: 1, e: "El código de error (como CRITICAL_PROCESS_DIED) nos guía hacia el driver o hardware fallido." },
+        { q: "¿Qué componente se encarga de dar video si no hay una placa de video dedicada?", o: ["El disco duro", "Los gráficos integrados del procesador", "La memoria RAM", "La fuente"], a: 1, e: "Muchos procesadores modernos incluyen un núcleo gráfico (iGPU) para dar imagen." },
+        { q: "¿Qué es formatear un disco?", o: ["Limpiar el polvo", "Preparar la estructura lógica para organizar archivos (borrando todo)", "Cambiarle los cables", "Ponerle una clave"], a: 1, e: "Formatear elimina los datos y crea un nuevo sistema de archivos (NTFS, FAT32, etc.)." },
+        { q: "El cooler del procesador está lleno de tierra. ¿Qué efecto produce?", o: ["La PC vuela", "Sube la temperatura por falta de flujo de aire", "El disco se llena", "El teclado no escribe"], a: 1, e: "El polvo actúa como aislante térmico y bloquea el paso del aire frío." },
+        { q: "¿Para qué sirve entrar a la BIOS/UEFI?", o: ["Para escribir cartas", "Para configurar el hardware, orden de arranque y fecha/hora", "Para navegar por internet", "Para ver películas"], a: 1, e: "La BIOS es el firmware de bajo nivel que gestiona cómo interactúa el hardware con el software." },
+        { q: "¿Cómo se llama el slot donde se conecta la placa de video moderna?", o: ["SATA", "PCI Express x16", "IDE", "DIMM"], a: 1, e: "PCIe x16 es el estándar actual para conectar tarjetas gráficas de alto rendimiento." },
+        { q: "¿Cuál es la principal causa de falla en equipos portátiles (Notebooks)?", o: ["Falta de batería", "Acumulación de calor y falta de mantenimiento interno", "Pantalla muy brillante", "Color del plástico"], a: 1, e: "Debido a su espacio reducido, la falta de limpieza y cambio de pasta térmica daña las notebooks rápidamente." }
     ];
 
     let currentQuestion = 0;
@@ -166,6 +160,7 @@
     let timer;
     let timeLeft = 20;
 
+    // ESTA ES LA FUNCIÓN QUE FALTABA
     function startQuiz() {
         document.getElementById('startScreen').classList.remove('active');
         document.getElementById('quizScreen').classList.add('active');
@@ -219,4 +214,35 @@
             document.getElementById('feedbackTitle').style.color = "#2ecc71";
         } else {
             icon.innerHTML = '<i class="fas fa-times-circle" style="color:#e74c3c;"></i>';
-            document.getElementById('feedbackTitle').innerText =
+            document.getElementById('feedbackTitle').innerText = idx === -1 ? "TIEMPO AGOTADO" : "INCORRECTO";
+            document.getElementById('feedbackTitle').style.color = "#e74c3c";
+        }
+        document.getElementById('feedbackExplanation').innerText = q.e;
+        overlay.style.display = 'flex';
+    }
+
+    function nextQuestion() {
+        document.getElementById('feedbackOverlay').style.display = 'none';
+        currentQuestion++;
+        showQuestion();
+    }
+
+    function showResults() {
+        document.getElementById('quizScreen').classList.remove('active');
+        document.getElementById('resultScreen').classList.add('active');
+        document.getElementById('timerBadge').style.display = 'none';
+        document.getElementById('scoreDisplay').innerText = `${score}/20`;
+        document.getElementById('progressBar').style.width = '100%';
+    }
+
+    function sendWhatsApp() {
+        const name = document.getElementById('studentName').value;
+        const dni = document.getElementById('studentDNI').value;
+        if (!name || !dni) { alert("Completa tus datos"); return; }
+        const code = `PC-REP-${Math.floor(Math.random()*900)+100}-${score}`;
+        const text = `*EXAMEN REPARACIÓN PC - INSTITUTO NOA*%0A*Alumno:* ${name}%0A*DNI:* ${dni}%0A*Resultado:* ${score}/20%0A*Código:* ${code}`;
+        window.open(`https://wa.me/543816490060?text=${text}`, '_blank');
+    }
+</script>
+</body>
+</html>
